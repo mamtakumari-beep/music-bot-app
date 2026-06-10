@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Bot Collective</title>
-    <!-- Telegram WebApp Script -->
+    <!-- Telegram SDK -->
     <script src="https://telegram.org"></script>
     <style>
-        /* CSS RESET & GENERAL STYLES */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,23 +17,20 @@
             background-color: #0b0f19;
             color: #ffffff;
             padding: 16px;
-            padding-bottom: 110px; /* Space for the bottom menu */
+            padding-bottom: 95px;
         }
 
-        /* DYNAMIC SHOW/HIDE SYSTEM */
-        .page-container {
-            display: none; /* Default hidden */
+        /* Tabs System Configuration */
+        .page-content {
+            display: none;
         }
-        .page-container.active-page {
-            display: block !important; /* Only active page shows */
+        .active-page {
+            display: block !important;
         }
 
-        /* HEADER SETUP */
+        /* Header Style */
         .app-header {
             margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
         .app-header h1 {
             font-size: 22px;
@@ -44,26 +40,16 @@
         .app-header p {
             font-size: 12px;
             color: #9ca3af;
-        }
-        .user-pill {
-            font-size: 12px;
-            background-color: #1f2937;
-            padding: 4px 12px;
-            border-radius: 20px;
-            color: #e5e7eb;
+            margin-top: 2px;
         }
 
-        /* BOT CARD LIST STYLE */
-        .bot-container {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
+        /* Bot Cards Styling */
         .bot-card {
             background-color: #111827;
             border: 1px solid #1f2937;
             border-radius: 16px;
             padding: 16px;
+            margin-bottom: 14px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         .bot-main-info {
@@ -133,6 +119,8 @@
             text-align: center;
             border: none;
             cursor: pointer;
+            text-decoration: none;
+            display: block;
         }
         .btn-blue {
             background-color: #2563eb;
@@ -144,7 +132,7 @@
             border: 1px solid #374151;
         }
 
-        /* SCREENS GENERAL INTERFACE */
+        /* Screens Layout Alignment */
         .profile-layout {
             text-align: center;
             padding: 24px 0;
@@ -178,7 +166,7 @@
             margin-top: 4px;
         }
 
-        /* DATA INFO BOX */
+        /* Info Data Box Styling */
         .data-table-box {
             background-color: #111827;
             border: 1px solid #1f2937;
@@ -222,10 +210,12 @@
             margin-top: 24px;
             cursor: pointer;
             font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        /* 100% BULLETPROOF SOLID TEXT BOTTOM NAVIGATION BAR */
-        .solid-bottom-navbar {
+        /* FIXED FOOTER NAVBAR */
+        .bottom-nav-bar {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -233,93 +223,98 @@
             background-color: #030712;
             border-top: 2px solid #1f2937;
             display: flex;
-            height: 65px;
+            height: 70px;
             justify-content: space-around;
             align-items: center;
             z-index: 99999;
         }
-        .text-nav-btn {
+        .nav-item-btn {
             background: none;
             border: none;
             color: #6b7280;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             cursor: pointer;
             height: 100%;
             width: 33.33%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            gap: 4px;
         }
-        .text-nav-btn.active-tab-highlight {
+        .nav-item-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+        .nav-item-btn.active-tab-highlight {
             color: #3b82f6 !important;
-            border-bottom: 3px solid #3b82f6;
-            background-color: rgba(59, 130, 246, 0.05);
         }
     </style>
 </head>
 <body>
 
     <!-- SCREEN 1: HOME (BOT LIST) -->
-    <div id="screen-home" class="page-container active-page">
+    <div id="screen-home" class="page-content active-page">
         <div class="app-header">
-            <div>
-                <h1>Music Bot Collective</h1>
-                <p>All active bots & activities list</p>
-            </div>
-            <span id="user-top-name" class="user-pill">Hi, User</span>
+            <h1>Music Bot Collective</h1>
+            <p>All active bots & activities list</p>
         </div>
-        <div id="bot-list-target" class="bot-container">
-            <!-- Dynamic data list injection -->
-        </div>
-    </div>
 
-    <!-- SCREEN 2: USER PROFILE -->
-    <div id="screen-profile" class="page-container profile-layout">
-        <div id="user-avatar-initial" class="large-dp-circle bg-blue-gradient">U</div>
-        <h2 id="user-display-name" class="main-heading">Telegram User</h2>
-        <p id="user-handle-name" class="sub-heading">@Username</p>
-
-        <div class="data-table-box">
-            <div class="data-table-row">
-                <span class="row-label">User ID</span>
-                <span id="field-user-id" class="row-value monospace">00000000</span>
+        <!-- Bot 1 -->
+        <div class="bot-card">
+            <div class="bot-main-info">
+                <div class="bot-avatar">🎵</div>
+                <div class="bot-text-details">
+                    <div class="bot-title-row">
+                        <span class="bot-title-name">Laado X Music 1</span>
+                        <span class="bot-badge badge-active">Active</span>
+                    </div>
+                    <div class="bot-user-handle">@laado_music_1_bot</div>
+                    <div class="bot-numeric-id">ID: 583920192</div>
+                </div>
             </div>
-            <div class="data-table-row">
-                <span class="row-label">Chat ID</span>
-                <span id="field-chat-id" class="row-value monospace">00000000</span>
-            </div>
-            <div class="data-table-row">
-                <span class="row-label">Premium User</span>
-                <span id="field-premium" class="row-value">No</span>
-            </div>
-            <div class="data-table-row">
-                <span class="row-label">Language</span>
-                <span id="field-lang" class="row-value">EN</span>
+            <div class="bot-actions-grid">
+                <a href="https://t.me" target="_blank" class="action-button btn-blue">Open Bot</a>
+                <a href="https://t.me?startgroup=true" target="_blank" class="action-button btn-gray">Add to Group</a>
             </div>
         </div>
-    </div>
 
-    <!-- SCREEN 3: OWNER DETAILS -->
-    <div id="screen-owner" class="page-container profile-layout">
-        <div class="large-dp-circle bg-amber-gradient">👑</div>
-        <h2 class="main-heading">Niraj Kumar</h2>
-        <p class="sub-heading" style="color: #fbbf24;">@Comeback_009</p>
+        <!-- Bot 2 -->
+        <div class="bot-card">
+            <div class="bot-main-info">
+                <div class="bot-avatar">🎧</div>
+                <div class="bot-text-details">
+                    <div class="bot-title-row">
+                        <span class="bot-title-name">Laado X Music 2</span>
+                        <span class="bot-badge badge-active">Active</span>
+                    </div>
+                    <div class="bot-user-handle">@laado_music_2_bot</div>
+                    <div class="bot-numeric-id">ID: 694021942</div>
+                </div>
+            </div>
+            <div class="bot-actions-grid">
+                <a href="https://t.me" target="_blank" class="action-button btn-blue">Open Bot</a>
+                <a href="https://t.me?startgroup=true" target="_blank" class="action-button btn-gray">Add to Group</a>
+            </div>
+        </div>
 
-        <div class="data-table-box">
-            <div class="data-table-row">
-                <span class="row-label">Owner User ID</span>
-                <span class="row-value monospace" style="color: #fbbf24;">7771481658</span>
+        <!-- Bot 3 -->
+        <div class="bot-card">
+            <div class="bot-main-info">
+                <div class="bot-avatar">📻</div>
+                <div class="bot-text-details">
+                    <div class="bot-title-row">
+                        <span class="bot-title-name">Laado X Music Pro</span>
+                        <span class="bot-badge badge-maintenance">Maintenance</span>
+                    </div>
+                    <div class="bot-user-handle">@laado_music_pro_bot</div>
+                    <div class="bot-numeric-id">ID: 739201948</div>
+                </div>
             </div>
-            <div class="data-table-row">
-                <span class="row-label">Owner Chat ID</span>
-                <span class="row-value monospace" style="color: #fbbf24;">7771481658</span>
-            </div>
-            <div class="data-table-row">
-                <span class="row-label">Network Status</span>
-                <span class="row-value" style="color: #4ade80;">Main Owner</span>
+            <div class="bot-actions-grid">
+                <a href="https://t.me" target="_blank" class="action-button btn-blue">Open Bot</a>
+                <a href="https://t.me?startgroup=true" target="_blank" class="action-button btn-gray">Add to Group</a>
             </div>
         </div>
         
