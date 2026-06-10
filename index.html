@@ -17,14 +17,15 @@
     <div class="max-w-md mx-auto p-4 pb-24 min-h-screen flex flex-col justify-between">
         
         <div>
-            <!-- GLOBAL HEADER STATUS (सभी स्क्रीन्स पर दिखेगा) -->
+            <!-- GLOBAL HEADER STATUS -->
             <div class="flex items-center justify-between mb-6 border border-teal-900/40 bg-[#0a1e24] p-3 rounded-xl">
                 <div class="flex items-center gap-2 text-teal-400 font-bold tracking-wider text-sm">
                     <i class="fa-solid px-1 fa-robot"></i> BOTXHUB
                 </div>
+                <!-- यहाँ ऐप खोलने वाले का नाम और छोटा फोटो ऑटोमैटिकली आ जाएगा -->
                 <div class="flex items-center gap-2 bg-[#051318] px-3 py-1.5 rounded-lg border border-teal-950 text-xs text-gray-400">
-                    <img id="header-avatar" src="https://placeholder.com" class="w-6 h-6 rounded-full object-cover" alt="profile">
-                    <span id="header-username">Playerpro x Ass...</span>
+                    <img id="header-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='%230088cc'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>" class="w-6 h-6 rounded-full object-cover" alt="profile">
+                    <span id="header-username">Loading...</span>
                     <i class="fa-solid fa-chevron-down text-[10px]"></i>
                 </div>
             </div>
@@ -37,23 +38,25 @@
                     <h2 class="font-bold text-lg tracking-wide">Music Bot Collective</h2>
                 </div>
                 <div class="mb-6">
-                    <span class="bg-teal-950/80 border border-teal-900 text-teal-400 text-xs px-3 py-1 rounded-full font-medium">8 active bots</span>
+                    <span class="bg-teal-950/80 border border-teal-900 text-teal-400 text-xs px-3 py-1 rounded-full font-medium">1 active bot</span>
                 </div>
 
-                <!-- Bot Card 1 -->
+                <!-- Bot Card -->
                 <div class="bg-[#091b20] border border-teal-950 rounded-2xl p-5 mb-5 shadow-xl">
                     <div class="flex items-start gap-4 mb-4">
-                        <img src="https://placeholder.com" class="w-14 h-14 rounded-full border border-teal-500/30 object-cover" alt="Bot Logo">
+                        <div class="w-14 h-14 rounded-full bg-teal-950 border border-teal-500/30 flex items-center justify-center text-teal-400 text-2xl">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
                         <div>
-                            <h3 class="font-bold text-lg tracking-wide">ANGEL X MUSIC</h3>
-                            <p class="text-xs text-gray-400">@MissQtBot</p>
+                            <h3 class="font-bold text-lg tracking-wide">MY MUSIC BOT</h3>
+                            <p class="text-xs text-gray-400">@YourMusicBot</p>
                             <div class="mt-2 inline-flex items-center gap-1.5 bg-[#051318] border border-teal-950 px-2.5 py-1 rounded-md text-[11px] text-teal-400">
-                                <i class="fa-solid fa-chart-line text-[10px]"></i> 44,270 monthly users
+                                <i class="fa-solid fa-chart-line text-[10px]"></i> Live Users
                             </div>
                         </div>
                     </div>
                     <p class="text-sm text-gray-300 leading-relaxed mb-5 font-light">
-                        High quality music player in voice chats - Play any song!
+                        यहाँ अपने बॉट के बारे में छोटा सा विवरण (Description) लिखें।
                     </p>
                     <div class="flex justify-between items-center text-xs mb-4 text-gray-400 px-1">
                         <span><i class="fa-solid fa-music mr-1.5 text-xs"></i> Music</span>
@@ -61,22 +64,8 @@
                     </div>
                     <div class="flex flex-col gap-2.5">
                         <button class="w-full bg-[#0e2d35] border border-teal-900/60 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2">
-                            <i class="fa-regular fa-compass"></i> Open
+                            <i class="fa-regular fa-compass"></i> Open Bot
                         </button>
-                        <button class="w-full bg-[#1b4332] border border-green-900/40 text-green-300 py-2.5 rounded-xl font-medium text-sm flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-user-plus text-xs"></i> Add to Group
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Bot Card 2 -->
-                <div class="bg-[#091b20] border border-teal-950 rounded-2xl p-5 shadow-xl opacity-60">
-                    <div class="flex items-start gap-4">
-                        <img src="https://placeholder.com" class="w-14 h-14 rounded-full border border-teal-500/30 object-cover" alt="Bot Logo">
-                        <div>
-                            <h3 class="font-bold text-lg tracking-wide">NOTY X MUSIC</h3>
-                            <p class="text-xs text-gray-400">@NotyMusicBot</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -84,17 +73,20 @@
             <!-- ================= SCREEN 2: PROFILE ================= -->
             <div id="screen-profile" class="screen-content hidden">
                 <div class="border border-teal-950/60 bg-gradient-to-b from-[#071a20] to-[#051318] rounded-[28px] p-6 text-center shadow-2xl flex flex-col items-center">
-                    <div class="w-36 h-36 rounded-full border-2 border-teal-400 p-1 mb-4 shadow-lg shadow-teal-500/10">
-                        <img id="main-avatar" src="https://placeholder.com" class="w-full h-full rounded-full object-cover" alt="User Profile">
+                    <!-- यूज़र की बड़ी प्रोफाइल फोटो -->
+                    <div class="w-36 h-36 rounded-full border-2 border-teal-400 p-1 mb-4 shadow-lg shadow-teal-500/10 bg-[#0a1e24] flex items-center justify-center">
+                        <img id="main-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='%230088cc'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>" class="w-full h-full rounded-full object-cover" alt="User Profile">
                     </div>
+                    <!-- यूज़र का असली नाम -->
                     <h2 id="user-fullname" class="font-bold text-xl tracking-wide flex items-center justify-center gap-2 mb-1">
-                        <i class="fa-solid fa-headphones text-sm text-gray-400"></i> ♡ Playerpro x Assistant
+                        Telegram User
                     </h2>
                     <div class="text-xs text-gray-400 mb-2"><i class="fa-solid fa-music"></i></div>
-                    <p id="user-username" class="text-sm text-gray-300 font-light mb-1">@PlayerPro_Assistant</p>
-                    <p class="text-xs text-gray-500 tracking-wide mb-8">ID: <span id="user-id">8490025594</span></p>
+                    <!-- यूज़र का यूजरनेम और आईडी -->
+                    <p id="user-username" class="text-sm text-gray-300 font-light mb-1">@username</p>
+                    <p class="text-xs text-gray-500 tracking-wide mb-8">ID: <span id="user-id">00000000</span></p>
 
-                    <!-- Data Cards -->
+                    <!-- Stats Cards -->
                     <div class="w-full bg-[#081b20] border border-teal-950/80 rounded-2xl p-4 flex items-center gap-4 mb-4 text-left">
                         <div class="bg-[#0e2c34] text-teal-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl border border-teal-900/40">
                             <i class="fa-regular fa-calendar-days"></i>
@@ -110,36 +102,61 @@
                         </div>
                         <div>
                             <p class="text-sm font-bold tracking-wide">Bots Accessed</p>
-                            <p class="text-base text-gray-400 mt-0.5">8</p>
+                            <p class="text-base text-gray-400 mt-0.5">1</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ================= SCREEN 3: DONATE ================= -->
-            <div id="screen-donate" class="screen-content hidden">
-                <div class="border border-teal-950/60 bg-gradient-to-b from-[#071a20] to-[#051318] rounded-[28px] p-6 text-center shadow-2xl flex flex-col items-center">
-                    <div class="text-rose-500 text-6xl my-4 animate-pulse"><i class="fa-solid fa-heart"></i></div>
-                    <h2 class="font-bold text-3xl tracking-wide mb-4">Donate</h2>
-                    <p class="text-sm text-gray-300 leading-relaxed max-w-[280px] mb-6 font-light">
-                        ✨ Your support keeps our bots getting smarter 🤖💙 — scroll down ⬇️ to donate and don't miss a small message waiting for you at the bottom! ✨
-                    </p>
-                    
-                    <div class="w-full flex justify-start mb-6">
-                        <div class="flex items-center gap-2 bg-[#051318] border border-teal-950 px-3 py-1.5 rounded-lg text-xs text-gray-300">
-                            <i class="fa-solid fa-language text-sm"></i>
-                            <select class="bg-transparent border-none outline-none text-white pr-2">
-                                <option value="en" class="bg-[#051318]">English</option>
-                                <option value="hi" class="bg-[#051318]">Hindi</option>
-                            </select>
-                        </div>
-                    </div>
+        </div>
 
-                    <div class="w-full bg-[#081b20] border-2 border-dashed border-teal-950 rounded-2xl p-5 flex flex-col items-center">
-                        <div class="w-14 h-14 bg-teal-500/10 text-teal-400 rounded-full flex items-center justify-center text-3xl mb-3 border border-teal-500/20">
-                            <i class="fa-solid fa-t"></i>
-                        </div>
-                        <p class="text-rose-400 font-bold text-lg tracking-wide mb-2">USDT (TRC20)</p>
-                        <p class="text-xs text-gray-400 tracking-wider break-all mb-4 px-2 font-mono">TD8U9qrd2VtNupKYfQU6...N1Z6iq18RL</p>
-                        <button id="copy-btn" class="bg-[#0e2c34] text-teal-400 border border-teal-900/60 px-6 py-2 rounded-xl text-sm font-medium flex items-center gap-2 active:scale-95 transition-all">
-                            
+        <!-- ================= FIXED BOTTOM NAVIGATION BAR (सिर्फ 2 बटन) ================= -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#06171d]/95 backdrop-blur-md border-t border-teal-950 flex justify-around py-3 text-center">
+            <!-- Home Tab -->
+            <button id="tab-home" class="nav-tab w-1/2 flex flex-col items-center gap-1 text-teal-400 transition-colors">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="text-[10px] font-medium">Home</span>
+            </button>
+            <!-- Profile Tab -->
+            <button id="tab-profile" class="nav-tab w-1/2 flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-user text-lg"></i>
+                <span class="text-[10px] font-medium">Profile</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Navigation & Data Integration -->
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.ready();
+
+        // 1. 2-SCREEN NAVIGATION LOGIC
+        const tabs = {
+            home: { btn: document.getElementById('tab-home'), screen: document.getElementById('screen-home') },
+            profile: { btn: document.getElementById('tab-profile'), screen: document.getElementById('screen-profile') }
+        };
+
+        function switchScreen(activeKey) {
+            Object.keys(tabs).forEach(key => {
+                if (key === activeKey) {
+                    tabs[key].screen.classList.remove('hidden');
+                    tabs[key].btn.classList.add('text-teal-400');
+                    tabs[key].btn.classList.remove('text-gray-400');
+                } else {
+                    tabs[key].screen.classList.add('hidden');
+                    tabs[key].btn.classList.remove('text-teal-400');
+                    tabs[key].btn.classList.add('text-gray-400');
+                }
+            });
+        }
+
+        tabs.home.btn.addEventListener('click', () => switchScreen('home'));
+        tabs.profile.btn.addEventListener('click', () => switchScreen('profile'));
+
+        // 2. LIVE TELEGRAM USER DATA DETECTOR
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const user = tg.initDataUnsafe.user;
+
+        
