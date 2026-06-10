@@ -7,7 +7,7 @@
     <!-- Telegram WebApp Script -->
     <script src="https://telegram.org"></script>
     <style>
-        /* CSS RESET & THEME */
+        /* CSS RESET & GENERAL STYLES */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,10 +18,18 @@
             background-color: #0b0f19;
             color: #ffffff;
             padding: 16px;
-            padding-bottom: 100px;
+            padding-bottom: 110px; /* Space for the bottom menu */
         }
 
-        /* HEADER */
+        /* DYNAMIC SHOW/HIDE SYSTEM */
+        .page-container {
+            display: none; /* Default hidden */
+        }
+        .page-container.active-page {
+            display: block !important; /* Only active page shows */
+        }
+
+        /* HEADER SETUP */
         .app-header {
             margin-bottom: 20px;
             display: flex;
@@ -45,12 +53,7 @@
             color: #e5e7eb;
         }
 
-        /* CHUPANE WALI CLASS */
-        .hidden {
-            display: none !important;
-        }
-
-        /* BOT CARD LIST */
+        /* BOT CARD LIST STYLE */
         .bot-container {
             display: flex;
             flex-direction: column;
@@ -123,14 +126,13 @@
             gap: 8px;
         }
         .action-button {
-            padding: 10px;
+            padding: 11px;
             border-radius: 12px;
             font-size: 13px;
             font-weight: 600;
             text-align: center;
             border: none;
             cursor: pointer;
-            text-decoration: none;
         }
         .btn-blue {
             background-color: #2563eb;
@@ -142,7 +144,7 @@
             border: 1px solid #374151;
         }
 
-        /* SCREENS STYLING */
+        /* SCREENS GENERAL INTERFACE */
         .profile-layout {
             text-align: center;
             padding: 24px 0;
@@ -176,7 +178,7 @@
             margin-top: 4px;
         }
 
-        /* SYSTEM DATA BOX */
+        /* DATA INFO BOX */
         .data-table-box {
             background-color: #111827;
             border: 1px solid #1f2937;
@@ -222,47 +224,46 @@
             font-size: 14px;
         }
 
-        /* FIXED FOOTER NAVIGATION */
-        .bottom-nav-bar {
+        /* 100% BULLETPROOF SOLID TEXT BOTTOM NAVIGATION BAR */
+        .solid-bottom-navbar {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             background-color: #030712;
-            border-top: 1px solid #1f2937;
+            border-top: 2px solid #1f2937;
             display: flex;
+            height: 65px;
             justify-content: space-around;
-            padding: 12px 0;
-            z-index: 9999;
+            align-items: center;
+            z-index: 99999;
         }
-        .nav-item-btn {
+        .text-nav-btn {
             background: none;
             border: none;
-            color: #4b5563;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
+            color: #6b7280;
+            font-size: 13px;
+            font-weight: bold;
             cursor: pointer;
+            height: 100%;
             width: 33.33%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .nav-item-btn svg {
-            width: 22px;
-            height: 22px;
-        }
-        .nav-item-btn span {
-            font-size: 11px;
-            font-weight: 500;
-        }
-        .nav-item-btn.active-tab-highlight {
-            color: #3b82f6;
+        .text-nav-btn.active-tab-highlight {
+            color: #3b82f6 !important;
+            border-bottom: 3px solid #3b82f6;
+            background-color: rgba(59, 130, 246, 0.05);
         }
     </style>
 </head>
 <body>
 
     <!-- SCREEN 1: HOME (BOT LIST) -->
-    <div id="screen-home" class="page-container">
+    <div id="screen-home" class="page-container active-page">
         <div class="app-header">
             <div>
                 <h1>Music Bot Collective</h1>
@@ -271,12 +272,12 @@
             <span id="user-top-name" class="user-pill">Hi, User</span>
         </div>
         <div id="bot-list-target" class="bot-container">
-            <!-- Data load via script -->
+            <!-- Dynamic data list injection -->
         </div>
     </div>
 
     <!-- SCREEN 2: USER PROFILE -->
-    <div id="screen-profile" class="page-container hidden profile-layout">
+    <div id="screen-profile" class="page-container profile-layout">
         <div id="user-avatar-initial" class="large-dp-circle bg-blue-gradient">U</div>
         <h2 id="user-display-name" class="main-heading">Telegram User</h2>
         <p id="user-handle-name" class="sub-heading">@Username</p>
@@ -302,7 +303,7 @@
     </div>
 
     <!-- SCREEN 3: OWNER DETAILS -->
-    <div id="screen-owner" class="page-container hidden profile-layout">
+    <div id="screen-owner" class="page-container profile-layout">
         <div class="large-dp-circle bg-amber-gradient">👑</div>
         <h2 class="main-heading">Niraj Kumar</h2>
         <p class="sub-heading" style="color: #fbbf24;">@Comeback_009</p>
@@ -321,11 +322,4 @@
                 <span class="row-value" style="color: #4ade80;">Main Owner</span>
             </div>
         </div>
-        <button onclick="window.open('https://t.me', '_blank')" class="owner-submit-btn">
-            Contact Owner
-        </button>
-    </div>
-
-    <!-- BOTTOM FIXED NAV SYSTEM -->
-    <div class="bottom-nav-bar">
         
