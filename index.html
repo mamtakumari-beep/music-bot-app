@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TG Mini App</title>
-    <!-- Telegram Web App Script -->
-    <script src="https://telegram.org"></script>
+    <!-- Telegram Web App Script (Head me load hona jaroori hai) -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,37 +24,13 @@
         h3 { margin-top: 0; color: #2481cc; }
         p { margin: 5px 0; font-size: 14px; }
         .bold { font-weight: bold; }
-        
-        /* Buttons Style */
-        .tg-btn {
-            background-color: #2481cc;
-            color: white;
-            border: none;
-            padding: 12px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 10px;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
-        .tg-btn:hover {
-            background-color: #1c66a0;
-        }
-        .owner-btn {
-            background-color: #eb4d4b;
-        }
-        .owner-btn:hover {
-            background-color: #c0392b;
-        }
     </style>
 </head>
 <body>
 
-    <h2>Welcome to Mini App</h2>
+    <h2>Welcome</h2>
 
-    <!-- Feature 1: User Details -->
+    <!-- Feature : User Details -->
     <div class="card" id="user-card">
         <h3>👤 1. User Details (You)</h3>
         <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
@@ -63,98 +39,60 @@
         <p><span class="bold">Language:</span> <span id="u-lang">Loading...</span></p>
     </div>
 
-    <!-- Feature 2: Bot Details -->
+    <!-- Feature : Bot Details -->
     <div class="card" id="bot-card">
         <h3>🤖 2. Bot Details</h3>
         <p><span class="bold">Bot Name:</span> ˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</p>
         <p><span class="bold">Bot Username:</span> @laado_musicbot</p>
         <p><span class="bold">Status:</span> Active 🟢</p>
-        <button class="tg-btn" onclick="openBotChat()">Message Bot</button>
     </div>
 
-    <!-- Feature 3: App Owner Details -->
+    <!-- Feature : App Owner Details -->
     <div class="card" id="owner-card">
         <h3>👑 3. App Owner Details</h3>
         <p><span class="bold">Owner Name:</span> comeback</p>
         <p><span class="bold">Telegram Username:</span> @Comeback_009</p>
-        <p><span class="bold">Support:</span> Sangeet Stream</p>
-        <button class="tg-btn owner-btn" onclick="openOwnerChat()">Contact Owner</button>
+        <p><span class="bold">Support:</span> https://t.me/Sangeet_Stream</p>
     </div>
 
     <script>
-        // Initialize Telegram WebApp instantly
-        const tg = window.Telegram?.WebApp;
-        if (tg) {
-            tg.ready();
-            tg.expand();
-        }
+        function initTelegramApp() {
+            // Telegram WebApp Object Check
+            const tg = window.Telegram?.WebApp;
 
-        function fetchUserData() {
-            if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                const user = tg.initDataUnsafe.user;
-                
-                // Details fill karein
-                document.getElementById('u-name').innerText = (user.first_name || '') + ' ' + (user.last_name || '');
-                document.getElementById('u-username').innerText = user.username ? '@' + user.username : 'No Username';
-                document.getElementById('u-id').innerText = user.id || 'No ID';
-                document.getElementById('u-lang').innerText = user.language_code || 'en';
-                
-                return true; // Data mil gaya
-            }
-            return false; // Data abhi nahi mila
-        }
+            if (tg) {
+                tg.ready(); //
+                tg.expand(); //
 
-        // Try fetching immediately
-        const success = fetchUserData();
+                // Data fetch karne ki koshish karein
+                const user = tg.initDataUnsafe?.user; //
 
-        // Fallback loop agar data slow load hota hai
-        if (!success) {
-            let attempts = 0;
-            const checkInterval = setInterval(() => {
-                attempts++;
-                const hasData = fetchUserData();
-                if (hasData || attempts > 10) {
+                if (user && user.id) {
+                    // Agar user mil gaya toh loading hatao aur details dikhao
+                    document.getElementById('u-name').innerText = `${user.first_name} ${user.last_name || ''}`;
+                    document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
+                    document.getElementById('u-id').innerText = user.id;
+                    document.getElementById('u-lang').innerText = user.language_code || 'en';
+                    
+                    // Interval ko rokne ke liye
                     clearInterval(checkInterval);
-                    if (!hasData && document.getElementById('u-id').innerText === "Loading...") {
-                        document.getElementById('u-name').innerText = "Web Browser Mode";
-                        document.getElementById('u-username').innerText = "@not_inside_tg";
-                        document.getElementById('u-id').innerText = "Offline_ID_101";
-                        document.getElementById('u-lang').innerText = "en";
-                    }
                 }
-            }, 500);
-        }
-
-        // Universal Navigation Function to open links securely inside Telegram
-        function navigateToTelegram(linkOrUsername) {
-            let fullUrl = linkOrUsername;
-            
-            // Agar sirf username diya hai toh url banayein
-            if (!linkOrUsername.startsWith('http')) {
-                const cleanUsername = linkOrUsername.replace('@', '').trim();
-                fullUrl = 'https://t.me' + cleanUsername;
-            }
-
-            if (tg && typeof tg.openTelegramLink === 'function') {
-                try {
-                    tg.openTelegramLink(fullUrl);
-                } catch (e) {
-                    tg.openLink(fullUrl); // Backup method
-                }
-            } else {
-                window.open(fullUrl, '_blank'); // Browser backup
             }
         }
 
-        // Button Action to Open Bot Chat
-        function openBotChat() {
-            navigateToTelegram("laado_musicbot");
-        }
+        // Agar data slow load ho raha hai, toh yeh har 500ms (0.5 second) me check karega
+        const checkInterval = setInterval(initTelegramApp, 500);
 
-        // Button Action to Open Owner Chat (Opens the support link directly)
-        function openOwnerChat() {
-            navigateToTelegram("https://t.meSangeet_Stream"); 
-        }
+        // Max 5 seconds tak check karega, agar fir bhi nahi mila toh Browser mode default data dikhayega
+        setTimeout(() => {
+            clearInterval(checkInterval);
+            if (document.getElementById('u-id').innerText === "Loading...") {
+                document.getElementById('u-name').innerText = "Web Browser Mode";
+                document.getElementById('u-username').innerText = "@not_inside_tg";
+                document.getElementById('u-id').innerText = "Offline_ID_101";
+                document.getElementById('u-lang').innerText = "en";
+            }
+        }, 5000);
     </script>
 </body>
 </html>
