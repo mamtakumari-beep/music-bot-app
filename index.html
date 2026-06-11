@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TG Mini App</title>
-    <!-- Telegram Web App Script -->
-    <script src="https://telegram.org"></script>
+    <!-- Telegram Web App Script (Head me load hona jaroori hai) -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,16 +30,16 @@
 
     <h2>Welcome to Mini App</h2>
 
-    <!-- Feature 1: User Details (Automatic) -->
+    <!-- Feature 1: User Details -->
     <div class="card" id="user-card">
         <h3>👤 1. User Details (You)</h3>
         <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
-        <p><span class="bold">Username:</span> <span id="u-username">None</span></p>
+        <p><span class="bold">Username:</span> <span id="u-username">Loading...</span></p>
         <p><span class="bold">ID:</span> <span id="u-id">Loading...</span></p>
         <p><span class="bold">Language:</span> <span id="u-lang">Loading...</span></p>
     </div>
 
-    <!-- Feature 2: Bot Details (Yahan Apne Bot Ki Details Dalein) -->
+    <!-- Feature 2: Bot Details -->
     <div class="card" id="bot-card">
         <h3>🤖 2. Bot Details</h3>
         <p><span class="bold">Bot Name:</span> ˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</p>
@@ -47,33 +47,52 @@
         <p><span class="bold">Status:</span> Active 🟢</p>
     </div>
 
-    <!-- Feature 3: App Owner Details (Yahan Apni Details Dalein) -->
+    <!-- Feature 3: App Owner Details -->
     <div class="card" id="owner-card">
         <h3>👑 3. App Owner Details</h3>
         <p><span class="bold">Owner Name:</span> comeback</p>
         <p><span class="bold">Telegram Username:</span> @Comeback_009</p>
-        <p><span class="bold">Support Channel:</span> https://t.me/Sangeet_Stream</p>
+        <p><span class="bold">Support Email:</span> https://t.me/Sangeet_Stream</p>
     </div>
 
     <script>
-        // Telegram Web App Initialize
-        const tg = window.Telegram.WebApp;
-        tg.expand(); // App ko full screen karne ke liye
+        function initTelegramApp() {
+            // Telegram WebApp Object Check
+            const tg = window.Telegram?.WebApp;
 
-        // 1. User Details Fetching (Yeh Telegram se automatically user ki details nikalega)
-        const user = tg.initDataUnsafe?.user;
-        if (user) {
-            document.getElementById('u-name').innerText = `${user.first_name} ${user.last_name || ''}`;
-            document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
-            document.getElementById('u-id').innerText = user.id;
-            document.getElementById('u-lang').innerText = user.language_code || 'en';
-        } else {
-            // Agar browser me open hoga toh demo data dikhega
-            document.getElementById('u-name').innerText = "Demo User";
-            document.getElementById('u-username').innerText = "@demo_user";
-            document.getElementById('u-id').innerText = "123456789";
-            document.getElementById('u-lang').innerText = "en";
+            if (tg) {
+                tg.ready(); //
+                tg.expand(); //
+
+                // Data fetch karne ki koshish karein
+                const user = tg.initDataUnsafe?.user; //
+
+                if (user && user.id) {
+                    // Agar user mil gaya toh loading hatao aur details dikhao
+                    document.getElementById('u-name').innerText = `${user.first_name} ${user.last_name || ''}`;
+                    document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
+                    document.getElementById('u-id').innerText = user.id;
+                    document.getElementById('u-lang').innerText = user.language_code || 'en';
+                    
+                    // Interval ko rokne ke liye
+                    clearInterval(checkInterval);
+                }
+            }
         }
+
+        // Agar data slow load ho raha hai, toh yeh har 500ms (0.5 second) me check karega
+        const checkInterval = setInterval(initTelegramApp, 500);
+
+        // Max 5 seconds tak check karega, agar fir bhi nahi mila toh Browser mode default data dikhayega
+        setTimeout(() => {
+            clearInterval(checkInterval);
+            if (document.getElementById('u-id').innerText === "Loading...") {
+                document.getElementById('u-name').innerText = "Web Browser Mode";
+                document.getElementById('u-username').innerText = "@not_inside_tg";
+                document.getElementById('u-id').innerText = "Offline_ID_101";
+                document.getElementById('u-lang').innerText = "en";
+            }
+        }, 5000);
     </script>
 </body>
 </html>
