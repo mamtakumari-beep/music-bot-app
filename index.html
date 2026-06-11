@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TG Mini App</title>
-    <!-- Telegram Web App Script (Head me load hona jaroori hai) -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Telegram Web App Script -->
+    <script src="https://telegram.org"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,13 +24,38 @@
         h3 { margin-top: 0; color: #2481cc; }
         p { margin: 5px 0; font-size: 14px; }
         .bold { font-weight: bold; }
+        
+        /* Telegram Styled Button */
+        .tg-btn {
+            background-color: #2481cc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .tg-btn:hover {
+            background-color: #1c66a0;
+        }
+        /* Owner Button Unique Color (Optional) */
+        .owner-btn {
+            background-color: #eb4d4b;
+        }
+        .owner-btn:hover {
+            background-color: #c0392b;
+        }
     </style>
 </head>
 <body>
 
     <h2>Welcome to Mini App</h2>
 
-    <!-- Feature 1: User Details -->
+    <!-- Feature 1: User Details (Automatic) -->
     <div class="card" id="user-card">
         <h3>👤 1. User Details (You)</h3>
         <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
@@ -39,55 +64,75 @@
         <p><span class="bold">Language:</span> <span id="u-lang">Loading...</span></p>
     </div>
 
-    <!-- Feature 2: Bot Details (Button ke saath) -->
-<div class="card" id="bot-card">
-    <h3>🤖 2. Bot Details</h3>
-    <p><span class="bold">Bot Name:</span> ˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</p>
-    <p><span class="bold">Bot Username:</span> @laado_musicbot</p>
-    <p><span class="bold">Status:</span> Active 🟢</p>
-    
-    <!-- Naya Button Jo Bot Chat Open Karega -->
-    <button class="tg-btn" onclick="openBotChat()">Message Bot</button>
-</div>
-    
+    <!-- Feature 2: Bot Details -->
+    <div class="card" id="bot-card">
+        <h3>🤖 2. Bot Details</h3>
+        <p><span class="bold">Bot Name:</span> ˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</p>
+        <p><span class="bold">Bot Username:</span> @laado_musicbot</p>
+        <p><span class="bold">Status:</span> Active 🟢</p>
+        <button class="tg-btn" onclick="openBotChat()">Message Bot</button>
+    </div>
 
-    <!-- Feature 3: App Owner Details -->
+    <!-- Feature 3: App Owner Details (Button Added) -->
     <div class="card" id="owner-card">
         <h3>👑 3. App Owner Details</h3>
         <p><span class="bold">Owner Name:</span> comeback</p>
         <p><span class="bold">Telegram Username:</span> @Comeback_009</p>
         <p><span class="bold">Support Email:</span> https://t.me/Sangeet_Stream</p>
+        <button class="tg-btn owner-btn" onclick="openOwnerChat()">Contact Owner</button>
     </div>
 
     <script>
         function initTelegramApp() {
-            // Telegram WebApp Object Check
             const tg = window.Telegram?.WebApp;
 
             if (tg) {
-                tg.ready(); //
-                tg.expand(); //
+                tg.ready();
+                tg.expand();
 
-                // Data fetch karne ki koshish karein
-                const user = tg.initDataUnsafe?.user; //
+                const user = tg.initDataUnsafe?.user;
 
                 if (user && user.id) {
-                    // Agar user mil gaya toh loading hatao aur details dikhao
                     document.getElementById('u-name').innerText = `${user.first_name} ${user.last_name || ''}`;
                     document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
                     document.getElementById('u-id').innerText = user.id;
                     document.getElementById('u-lang').innerText = user.language_code || 'en';
                     
-                    // Interval ko rokne ke liye
                     clearInterval(checkInterval);
                 }
             }
         }
 
-        // Agar data slow load ho raha hai, toh yeh har 500ms (0.5 second) me check karega
+        // Button Action to Open Bot Chat
+        function openBotChat() {
+            const tg = window.Telegram?.WebApp;
+            const botUsername = "laado_musicbot";
+            
+            if (tg) {
+                tg.openTelegramLink(`https://t.me{botUsername}`);
+            } else {
+                window.open(`https://t.me{botUsername}`, '_blank');
+            }
+        }
+
+        // Button Action to Open Owner Chat
+        function openOwnerChat() {
+            const tg = window.Telegram?.WebApp;
+            
+            // ⚠️ Yahan "YourUsername" ko hata kar apna asli telegram username (bina @ ke) likhein
+            const ownerUsername = "Comeback_009"; 
+            
+            if (tg) {
+                tg.openTelegramLink(`https://t.me{ownerUsername}`);
+            } else {
+                window.open(`https://t.me{ownerUsername}`, '_blank');
+            }
+        }
+
+        // Auto-refresh interval to catch data properly
         const checkInterval = setInterval(initTelegramApp, 500);
 
-        // Max 5 seconds tak check karega, agar fir bhi nahi mila toh Browser mode default data dikhayega
+        // Fallback for Web Browser Mode after 5 seconds
         setTimeout(() => {
             clearInterval(checkInterval);
             if (document.getElementById('u-id').innerText === "Loading...") {
@@ -97,20 +142,6 @@
                 document.getElementById('u-lang').innerText = "en";
             }
         }, 5000);
-    </function openBotChat() {
-    const tg = window.Telegram?.WebApp;
-    
-    // Yahan '@MyAwesomeBot' ki jagah apne asli bot ka username likhein
-    const botUsername = "laado_musicbot"; 
-    
-    if (tg) {
-        // Yeh Telegram ke andar hi direct bot ki chat open kar dega
-        tg.openTelegramLink(`https://t.me{botUsername}`);
-    } else {
-        // Agar browser me chal raha hai
-        window.open(`https://t.me{botUsername}`, '_blank');
-    }
-        }
-        >
+    </script>
 </body>
 </html>
