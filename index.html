@@ -1,164 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Bot Store Mini App</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://tailwindcss.com"></script>
-    <!-- Telegram Web App Script -->
+    <title>Music Bot Store with Owner Details</title>
+    <!-- टेलीग्राम का आवश्यक SDK स्क्रिप्ट -->
     <script src="https://telegram.org"></script>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b141a; /* डार्क थीम बैकग्राउंड */
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 15px;
+            margin: 0;
+        }
+        /* ओनर कार्ड की स्टाइलिंग */
+        .owner-card {
+            background: #1c2d38;
+            border-radius: 14px;
+            padding: 15px;
+            margin: 10px auto 25px auto;
+            max-width: 340px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid #ffb703; /* ओनर के लिए गोल्डन बॉर्डर */
+            box-sizing: border-box;
+        }
+        .owner-header {
+            display: flex;
+            align-items: center;
+        }
+        .owner-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid #ffb703;
+            background: #24303f;
+        }
+        .owner-info h4 {
+            margin: 0;
+            font-size: 16px;
+            color: #ffb703; /* गोल्डन नाम */
+        }
+        .owner-username {
+            margin: 3px 0;
+            font-size: 13px;
+            color: #b1c3cc;
+        }
+        .owner-id {
+            margin: 0;
+            font-size: 11px;
+            color: #8fa0a8;
+        }
+        .owner-badge {
+            background: rgba(255, 183, 3, 0.1);
+            color: #ffb703;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .section-title {
+            text-align: left;
+            max-width: 340px;
+            margin: 20px auto 10px auto;
+            color: #14ffd6;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        /* म्यूजिक बॉट कार्ड की स्टाइलिंग */
+        .bot-card {
+            background: #15242d;
+            border-radius: 14px;
+            padding: 15px;
+            margin: 12px auto;
+            max-width: 340px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            box-sizing: border-box;
+        }
+        .bot-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .bot-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+            background: #24303f;
+            border: 1px solid #14ffd6;
+        }
+        .bot-info h4 { margin: 0; font-size: 16px; color: #ffffff; }
+        .bot-username { margin: 2px 0 0 0; font-size: 13px; color: #8fa0a8; }
+        .bot-desc { font-size: 13px; color: #b1c3cc; margin: 0 0 15px 0; line-height: 1.4; }
+        .open-btn {
+            background-color: #00a884;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .open-btn:active { background-color: #008f70; }
+    </style>
 </head>
-<body class="bg-[#051318] text-white font-sans selection:bg-teal-500 select-none">
+<body>
 
-    <!-- Main Container -->
-    <div class="max-w-md mx-auto p-4 pb-24 min-h-screen flex flex-col justify-between">
-        
-        <div>
-            <!-- GLOBAL HEADER STATUS -->
-            <div class="flex items-center justify-between mb-6 border border-teal-900/40 bg-[#0a1e24] p-3 rounded-xl">
-                <div class="flex items-center gap-2 text-teal-400 font-bold tracking-wider text-sm">
-                    <i class="fa-solid px-1 fa-robot"></i> BOTXHUB
-                </div>
-                <!-- यहाँ ऐप खोलने वाले का नाम और छोटा फोटो ऑटोमैटिकली आ जाएगा -->
-                <div class="flex items-center gap-2 bg-[#051318] px-3 py-1.5 rounded-lg border border-teal-950 text-xs text-gray-400">
-                    <img id="header-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='%230088cc'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>" class="w-6 h-6 rounded-full object-cover" alt="profile">
-                    <span id="header-username">Loading...</span>
-                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                </div>
+    <!-- 👑 ओनर डिटेल्स कार्ड 👑 -->
+    <div class="owner-card">
+        <div class="owner-badge">👑 APP OWNER</div>
+        <div class="owner-header">
+            <!-- ⚠️ नीचे MissQtBot की जगह अपना असली टेलीग्राम यूजरनेम डाल लें ताकि आपकी DP लोड हो सके -->
+            <img class="owner-avatar" src="https://t.me/Comeback_009.jpg" alt="Owner DP" onerror="this.src='https://ui-avatars.com'">
+            <div class="owner-info">
+                <!-- यहाँ अपना नाम और डिटेल्स लिख लें -->
+                <h4>Niraj Kumar</h4>
+                <p class="owner-username">@Comeback_009</p>
+                <p class="owner-id">ID: 7771481658</p>
             </div>
-
-            <!-- ================= SCREEN 1: HOME ================= -->
-            <div id="screen-home" class="screen-content">
-                <div class="flex items-center gap-2 mb-4 border-l-4 border-teal-400 pl-3">
-                    <i class="fa-solid fa-robot text-teal-400 text-lg"></i>
-                    <h2 class="font-bold text-lg tracking-wide">Music Bot Collective</h2>
-                </div>
-                <div class="mb-6">
-                    <!-- बोट्स की लाइव संख्या यहाँ दिखेगी -->
-                    <span id="bots-count-badge" class="bg-teal-950/80 border border-teal-900 text-teal-400 text-xs px-3 py-1 rounded-full font-medium">Loading bots...</span>
-                </div>
-
-                <!-- लोड होते समय दिखने वाला स्पिनर -->
-                <div id="loading-spinner" class="text-center py-10 text-teal-400">
-                    <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
-                    <p class="text-xs text-gray-400 mt-2">Fetching live bots...</p>
-                </div>
-
-                <!-- यहाँ लाइव बोट्स की लिस्ट बिना कोड बदले ऑटोमैटिक लोड होगी -->
-                <div id="bots-list-container"></div>
-            </div>
-
-            <!-- ================= SCREEN 2: PROFILE ================= -->
-            <div id="screen-profile" class="screen-content hidden">
-                <div class="border border-teal-950/60 bg-gradient-to-b from-[#071a20] to-[#051318] rounded-[28px] p-6 text-center shadow-2xl flex flex-col items-center">
-                    <!-- यूज़र की बड़ी प्रोफाइल फोटो -->
-                    <div class="w-36 h-36 rounded-full border-2 border-teal-400 p-1 mb-4 shadow-lg shadow-teal-500/10 bg-[#0a1e24] flex items-center justify-center">
-                        <img id="main-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='%230088cc'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>" class="w-full h-full rounded-full object-cover" alt="User Profile">
-                    </div>
-                    <!-- यूज़र का असली नाम -->
-                    <h2 id="user-fullname" class="font-bold text-xl tracking-wide flex items-center justify-center gap-2 mb-1">Telegram User</h2>
-                    <div class="text-xs text-gray-400 mb-2"><i class="fa-solid fa-music"></i></div>
-                    <!-- यूज़र का यूजरनेम और आईडी -->
-                    <p id="user-username" class="text-sm text-gray-300 font-light mb-1">@username</p>
-                    <p class="text-xs text-gray-500 tracking-wide mb-8">ID: <span id="user-id">00000000</span></p>
-
-                    <!-- Stats Cards -->
-                    <div class="w-full bg-[#081b20] border border-teal-950/80 rounded-2xl p-4 flex items-center gap-4 mb-4 text-left">
-                        <div class="bg-[#0e2c34] text-teal-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl border border-teal-900/40">
-                            <i class="fa-regular fa-calendar-days"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold tracking-wide">Member Since</p>
-                            <p class="text-base text-gray-400 mt-0.5">2026</p>
-                        </div>
-                    </div>
-                    <div class="w-full bg-[#081b20] border border-teal-950/80 rounded-2xl p-4 flex items-center gap-4 text-left">
-                        <div class="bg-[#0e2c34] text-teal-400 w-12 h-12 rounded-xl flex items-center justify-center text-xl border border-teal-900/40">
-                            <i class="fa-solid fa-robot"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold tracking-wide">Total Store Bots</p>
-                            <p id="profile-total-bots" class="text-base text-gray-400 mt-0.5">0</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-
-        <!-- ================= FIXED BOTTOM NAVIGATION BAR ================= -->
-        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#06171d]/95 backdrop-blur-md border-t border-teal-950 flex justify-around py-3 text-center">
-            <button id="tab-home" class="nav-tab w-1/2 flex flex-col items-center gap-1 text-teal-400 transition-colors">
-                <i class="fa-solid fa-house text-lg"></i>
-                <span class="text-[10px] font-medium">Home</span>
-            </button>
-            <button id="tab-profile" class="nav-tab w-1/2 flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors">
-                <i class="fa-solid fa-user text-lg"></i>
-                <span class="text-[10px] font-medium">Profile</span>
-            </button>
-        </div>
-
     </div>
 
-    <!-- JavaScript & Live Database Integration -->
+    <div class="section-title">🎵 Music Bot Collective</div>
+
+    <!-- बॉट 1 -->
+    <div class="bot-card">
+        <div class="bot-header">
+            <img class="bot-avatar" src="https://t.me/laado_musicbot.jpg" alt="DP" onerror="this.src='https://ui-avatars.com'">
+            <div class="bot-info">
+                <h4>˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</h4>
+                <p class="bot-username">@laado_musicbot</p>
+            </div>
+        </div>
+        <p class="bot-desc">High quality music player in voice chats - Play any song!</p>
+        <button class="open-btn" onclick="openBot('@laado_musicbot')">➡️ Open Bot</button>
+    </div>
+
+    <!-- बॉट 2 -->
+    <div class="bot-card">
+        <div class="bot-header">
+            <img class="bot-avatar" src="https://t.me/laado_musicbot.jpg" alt="DP" onerror="this.src='https://ui-avatars.com'">
+            <div class="bot-info">
+                <h4>˹ʟᴀᴀᴅᴏ ꭙ ᴍᴜsɪᴄ˼ ♪</h4>
+                <p class="bot-username">@laado_musicbot</p>
+            </div>
+        </div>
+        <p class="bot-desc">Fast and powerful music streaming bot for Telegram groups.</p>
+        <button class="open-btn" onclick="openBot('@laado_musicbot')">➡️ Open Bot</button>
+    </div>
+
     <script>
         const tg = window.Telegram.WebApp;
-        tg.expand();
         tg.ready();
+        tg.expand();
 
-        // 1. 2-SCREEN NAVIGATION LOGIC
-        const tabs = {
-            home: { btn: document.getElementById('tab-home'), screen: document.getElementById('screen-home') },
-            profile: { btn: document.getElementById('tab-profile'), screen: document.getElementById('screen-profile') }
-        };
-
-        function switchScreen(activeKey) {
-            Object.keys(tabs).forEach(key => {
-                if (key === activeKey) {
-                    tabs[key].screen.classList.remove('hidden');
-                    tabs[key].btn.classList.add('text-teal-400');
-                    tabs[key].btn.classList.remove('text-gray-400');
-                } else {
-                    tabs[key].screen.classList.add('hidden');
-                    tabs[key].btn.classList.remove('text-teal-400');
-                    tabs[key].btn.classList.add('text-gray-400');
-                }
-            });
-        }
-        tabs.home.btn.addEventListener('click', () => switchScreen('home'));
-        tabs.profile.btn.addEventListener('click', () => switchScreen('profile'));
-
-        // 2. LIVE TELEGRAM USER DATA DETECTOR
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            const user = tg.initDataUnsafe.user;
-            document.getElementById('user-fullname').innerText = `${user.first_name} ${user.last_name || ''}`;
-            document.getElementById('header-username').innerText = user.first_name;
-            document.getElementById('user-id').innerText = user.id;
-            if(user.username) { document.getElementById('user-username').innerText = `@${user.username}`; }
-            if (user.photo_url) {
-                document.getElementById('main-avatar').src = user.photo_url;
-                document.getElementById('header-avatar').src = user.photo_url;
+        function openBot(username) {
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('medium');
             }
-        } else {
-            document.getElementById('header-username').innerText = "Guest User";
+            tg.openTelegramLink("https://t.me" + username);
         }
-
-        // 3. LIVE DATABASE LOGIC (आपकी असली फ़ायरबेस लिंक यहाँ जोड़ दी गई है)
-        const databaseURL = "https://mybotstore-ff52c-default-rtdb.firebaseio.com/";
-
-        function fetchLiveBots() {
-            fetch(databaseURL)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('loading-spinner').classList.add('hidden');
-                    const listContainer = document.getElementById('bots-list-container');
-                    listContainer.innerHTML = "";
-
-                    // अगर डेटा ऑब्जेक्ट के रूप में है तो उसे एरे में बदलें
-                    const botsArray = data ? (Array.isArray(data) ? data : Object.values(data)) : [];
-                    
-                    if(botsArray.length === 0) {
-        
+    </script>
+</body>
+</html>
