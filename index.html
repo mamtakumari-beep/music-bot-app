@@ -13,7 +13,7 @@
             color: var(--tg-theme-text-color, #ffffff);
             padding: 20px;
             margin: 0;
-            padding-bottom: 95px !important;
+            padding-bottom: 90px !important; /* नीचे नेविगेशन बार के लिए जगह */
         }
         .card {
             background: var(--tg-theme-secondary-bg-color, #202b36);
@@ -28,6 +28,7 @@
         p { margin: 6px 0; font-size: 14px; color: #e1e1e1; }
         .bold { font-weight: bold; color: #2481cc; }
         
+        /* 2 कॉलम बॉट्स के लिए स्टाइल */
         .bots-container {
             display: flex;
             gap: 12px;
@@ -39,7 +40,7 @@
             padding: 12px;
         }
         
-        /* 🌟 प्रोफाइल फोटो का सुंदर डिज़ाइन */
+        /* प्रोफाइल फोटो स्टाइल */
         .avatar-container {
             text-align: center;
             margin-bottom: 15px;
@@ -51,9 +52,9 @@
             border: 3px solid #2ea64f;
             object-fit: cover;
             margin: 0 auto;
-            background-color: #17212b;
         }
 
+        /* 🌟 टैब पेजों को छुपाने और दिखाने के लिए */
         .tab-content {
             display: none;
         }
@@ -61,29 +62,7 @@
             display: block;
         }
 
-        .owner-buttons-container {
-            display: flex;
-            flex-direction: row;
-            gap: 8px;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .owner-btn {
-            flex: 1;
-            padding: 12px 5px;
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-            transition: background 0.2s ease;
-        }
-        .channel-btn { background-color: #2481cc; }
-        .group-btn { background-color: #2ea64f; }
-        .third-btn { background-color: #6c5ce7; }
-
+        /* 🌟 बॉटम नेविगेशन बार (आपके स्क्रीनशॉट जैसा डिज़ाइन) */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -102,14 +81,15 @@
             align-items: center;
             color: #8a99a6;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             text-decoration: none;
-            width: 75px;
+            width: 70px;
             padding: 6px 0;
             border-radius: 12px;
             transition: all 0.2s ease;
         }
+        /* एक्टिव टैब का गोल बैकग्राउंड और हरा रंग */
         .nav-item.active {
             color: #2ea64f;
             background-color: rgba(46, 166, 79, 0.15);
@@ -122,11 +102,12 @@
 </head>
 <body>
 
-    <!-- 🏠 1. होम टैब -->
+    <!-- 🏠 होम टैब का कंटेंट -->
     <div id="home-tab" class="tab-content active">
         <h2>Welcome dear 👀</h2>
         <h2>🎧 Looking For A Music Bot? ✨Fast • Smooth • 24/7 Active, Play 🔍 Your Favorite Songs Instantly, Enjoy Music Without Hassle 🎶 Try It Once, You'll Love It 💞</h2>
 
+        <!-- बॉट्स 2 भाग में -->
         <div class="bots-container">
             <div class="card bot-card-half">
                 <h3>🤖 Bot 1</h3>
@@ -136,24 +117,29 @@
             </div>
             <div class="card bot-card-half">
                 <h3>🤖 Bot 2</h3>
-                <p><span class="bold">Name:</span> 𝗣𝗅𝗮𝘺𝘦𝘳𝘱𝙧𝘰 ꭙ 𝗠𝑢𝑠𝑖¢</p>
+                <p><span class="bold">Name:</span> 𝗣𝗅𝗮𝘺𝘦𝘳𝘱𝙧𝘰 ꭙ 𝗠𝑢𝑠𝑖𝑐</p>
                 <p><span class="bold">User:</span> @PlayerPro_MusicBot</p>
                 <p><span class="bold">Status:</span> Active 🟢</p>
             </div>
         </div>
+
+        <!-- ओनर डिटेल्स -->
+        <div class="card" id="owner-card">
+            <h3>👑 Owner</h3>
+            <p><span class="bold">Owner Name:</span> Niraj</p>
+            <p><span class="bold">Telegram Username:</span> @Comeback_009</p>
+            <p><span class="bold">Support:</span> https://t.me/Sangeet_Stream</p>
+        </div>
     </div>
 
-    <!-- 👤 2. प्रोफाइल टैब -->
+    <!-- 👤 प्रोफाइल टैब का कंटेंट -->
     <div id="profile-tab" class="tab-content">
         <h2 style="margin-top: 20px;">Your Profile 🌟</h2>
         <div class="card" id="user-card">
             <h3>👤 User Details</h3>
-            
             <div class="avatar-container">
-                <!-- डिफ़ॉल्ट रूप से एक साफ यूजर इमेज दिखेगी -->
-                <img id="u-avatar" class="user-avatar" src="https://icons8.com" alt="User DP">
+                <img id="u-avatar" class="user-avatar" src="https://cloudflare.com" alt="User DP">
             </div>
-
             <p><span class="bold">Name:</span> <span id="u-name">Loading...</span></p>
             <p><span class="bold">Username:</span> <span id="u-username">Loading...</span></p>
             <p><span class="bold">ID:</span> <span id="u-id">Loading...</span></p>
@@ -161,24 +147,7 @@
         </div>
     </div>
 
-    <!-- 👑 3. ओनर टैब -->
-    <div id="owner-tab" class="tab-content">
-        <h2 style="margin-top: 20px;">App Management 👑</h2>
-        <div class="card" id="owner-card">
-            <h3>👑 Owner Details</h3>
-            <p><span class="bold">Owner Name:</span> Niraj</p>
-            <p><span class="bold">Telegram Username:</span> @Comeback_009</p>
-            <p><span class="bold">Support:</span> https://t.me</p>
-        </div>
-
-        <div class="owner-buttons-container">
-            <button class="owner-btn channel-btn" onclick="openMyChannel()">channel 🚀</button>
-            <button class="owner-btn group-btn" onclick="openMyGroup()">group 💬</button>
-            <button class="owner-btn third-btn" onclick="openThirdLink()">help 🛠️</button>
-        </div>
-    </div>
-
-    <!-- बॉटम बार -->
+    <!-- 🌟 नया बॉटम नेविगेशन बार -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('home-tab', this)">
             <span class="nav-icon">🏠</span>
@@ -188,62 +157,58 @@
             <span class="nav-icon">👤</span>
             <span>Profile</span>
         </div>
-        <div class="nav-item" onclick="switchTab('owner-tab', this)">
-            <span class="nav-icon">👑</span>
-            <span>Owner</span>
-        </div>
     </div>
 
     <script>
+        // टैब बदलने का फंक्शन
         function switchTab(tabId, el) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            // सभी टैब कंटेंट छुपाएं
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // सभी बटन से एक्टिव क्लास हटाएं
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // चुने हुए टैब को दिखाएं और बटन को एक्टिव करें
             document.getElementById(tabId).classList.add('active');
             el.classList.add('active');
         }
 
-        // 🌟 सीधे बिना किसी टाइमर के तुरंत लोड करने का सटीक तरीका
-        document.addEventListener("DOMContentLoaded", () => {
+        function initTelegramApp() {
             const tg = window.Telegram?.WebApp;
-            
             if (tg) {
-                tg.ready();
-                tg.expand();
+                tg.ready(); 
+                tg.expand(); 
+                const user = tg.initDataUnsafe?.user; 
 
-                // टेलीग्राम का असली डेटा सीधे निकालें
-                const user = tg.initDataUnsafe?.user;
-
-                if (user) {
-                    // डेटा को स्क्रीन पर सेट करें
-                    document.getElementById('u-name').innerText = (user.first_name + ' ' + (user.last_name || '')).trim();
+                if (user && user.id) {
+                    document.getElementById('u-name').innerText = `${user.first_name} ${user.last_name || ''}`;
                     document.getElementById('u-username').innerText = user.username ? `@${user.username}` : 'No Username';
                     document.getElementById('u-id').innerText = user.id;
                     document.getElementById('u-lang').innerText = user.language_code || 'en';
                     
-                    // अगर टेलीग्राम फोटो यूआरएल देता है, तो लगाएं
                     if (user.photo_url) {
                         document.getElementById('u-avatar').src = user.photo_url;
                     }
-                } else {
-                    // अगर टेलीग्राम के बाहर ब्राउज़र में खोला जाए (Mock Details)
-                    setOfflineData();
+                    clearInterval(checkInterval);
                 }
-            } else {
-                setOfflineData();
             }
-        });
-
-        function setOfflineData() {
-            document.getElementById('u-name').innerText = "Radhe Krishna 🌺";
-            document.getElementById('u-username').innerText = "@Comeback_009";
-            document.getElementById('u-id').innerText = "7551141543";
-            document.getElementById('u-lang').innerText = "hi";
         }
 
-        // लिंक एक्शन्स
-        function openMyChannel() { window.Telegram?.WebApp?.openTelegramLink("https://t.me"); }
-        function openMyGroup() { window.Telegram?.WebApp?.openTelegramLink("https://t.me"); }
-        function openThirdLink() { window.Telegram?.WebApp?.openTelegramLink("https://t.me"); }
+        const checkInterval = setInterval(initTelegramApp, 500);
+
+        setTimeout(() => {
+            clearInterval(checkInterval);
+            if (document.getElementById('u-id').innerText === "Loading...") {
+                document.getElementById('u-name').innerText = "Web Browser Mode";
+                document.getElementById('u-username').innerText = "@not_inside_tg";
+                document.getElementById('u-id').innerText = "Offline_ID_101";
+                document.getElementById('u-lang').innerText = "en";
+                document.getElementById('u-avatar').src = "https://cloudflare.com";
+            }
+        }, 5000);
     </script>
 </body>
-    </html>
+</html>
